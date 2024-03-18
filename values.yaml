@@ -61,6 +61,13 @@ postgresql:
   podSecurityContext:
     enabled: false
   primary:
+    resources: 
+      limits:
+        memory: "512Mi"
+        cpu: "1"  
+      requests:
+        memory: "512Mi"
+        cpu: "1"  
     volumePermissions:
       enabled: false
       securityContext:

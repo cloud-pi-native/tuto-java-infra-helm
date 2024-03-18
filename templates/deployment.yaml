@@ -34,7 +34,7 @@ spec:
               value: {{ .Values.global.postgresql.auth.username }}
             - name: PG_PASSWORD
               valueFrom:
-                secretRef:
+                secretKeyRef:
                   name: mysecret-sops
                   key: PG_PASSWORD
             - name: SPRING_DATASOURCE_USERNAME
@@ -50,5 +50,5 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       securityContext:
-        runAsNonRoot: true
-        runAsUser: 10001
+        runAsNonRoot: false
+        runAsUser: 1
