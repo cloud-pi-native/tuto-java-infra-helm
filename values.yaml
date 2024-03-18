@@ -8,7 +8,7 @@ environnement: ovh
 phase: dev
 
 image:
-  repository: harbor.apps.c6.numerique-interieur.com/mi-tuto/app-java-forge-dso-demo
+  repository: harbor.apps.c6.numerique-interieur.com/mi-service-team/app-java-forge-dso-demo
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "master"
