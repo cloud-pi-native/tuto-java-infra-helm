@@ -4,6 +4,9 @@
 
 replicaCount: 1
 
+environnement: ovh
+phase: dev
+
 image:
   repository: harbor.apps.c6.numerique-interieur.com/mi-tuto/app-java-forge-dso-demo
   pullPolicy: Always
@@ -28,10 +31,10 @@ ingress:
 resources: 
   limits:
     memory: "512Mi"
-    cpu: "500m"  
+    cpu: "2"  
   requests:
     memory: "512Mi"
-    cpu: "500m"  
+    cpu: "500Mi"  
 
 global: 
   postgresql:

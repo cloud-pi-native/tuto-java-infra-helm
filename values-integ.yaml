@@ -1,8 +1,0 @@
-image:
-  repository: harbor.apps.c6.numerique-interieur.com/mi-tuto/app-java-forge-dso-demo
-  pullPolicy: Always
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: "master"
-
-ingress:
-  host: plec-demo-integ.dev.numerique-interieur.com
