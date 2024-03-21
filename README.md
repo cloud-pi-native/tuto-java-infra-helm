@@ -74,7 +74,7 @@ image:
   tag: "master" # Nom du tag de l'image
 
 imagePullSecrets: 
-  - name: "quay-image-pull-secret" # Nom du secret permettant de se connecter à la registry Quay. Ne pas modifier cette valeur dans le cadre de DSO
+  - name: "registry-pull-secret" # Nom du secret permettant de se connecter à la registry Quay. Ne pas modifier cette valeur dans le cadre de DSO
 
 service:
   type: ClusterIP # Type de service kubernetes à créer, ClusterIP dans la majorité des cas

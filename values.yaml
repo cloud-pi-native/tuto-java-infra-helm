@@ -14,12 +14,12 @@ image:
   tag: "master"
 
 imagePullSecrets: 
-  - name: "registry-pull-secret"
+  - name: "default-secret"
 nameOverride: ""
 fullnameOverride: ""
 
 service:
-  type: ClusterIP
+  type: NodePort
   port: 8080
 
 ingress:
