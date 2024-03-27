@@ -35,7 +35,7 @@ spec:
             - name: PG_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: mysecret-sops
+                  name: my-secret
                   key: PG_PASSWORD
             - name: SPRING_DATASOURCE_USERNAME
               value: $(PG_USER)
