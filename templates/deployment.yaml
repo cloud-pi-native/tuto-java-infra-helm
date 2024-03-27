@@ -7,8 +7,6 @@ metadata:
     app: dso-demo-java
 spec:
   replicas: {{ .Values.replicaCount }}
-  serviceAccountName: tuto-sa
-  serviceAccount: tuto-sa
   selector:
     matchLabels:
       {{- include "demo-java-helm.selectorLabels" . | nindent 6 }}
