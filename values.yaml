@@ -39,9 +39,11 @@ resources:
 global: 
   postgresql:
     auth:
-      postgresPassword: "MySupErPaSSwOrd"
+      existingSecret: my-secret
+      secretKeys:
+        userPasswordKey: "PG_PASSWORD"
+        adminPasswordKey: "PG_PASSWORD"
       username: "userdemo"
-      password: "passworddemo"
       database: "demodb"
 
 # Contrainte de sécurité Openshift
