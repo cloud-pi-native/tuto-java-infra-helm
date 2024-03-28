@@ -8,12 +8,13 @@ environnement: ovh
 phase: dev
 
 image:
-  repository: harbor.apps.c6.numerique-interieur.com/mi-service-team/app-java-forge-dso-demo
+  repository: harbor.apps.c6.numerique-interieur.com/mi-service-team
+  name: java-demo
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "master"
 
-imagePullSecrets: 
+imagePullSecrets:
   - name: "default-secret"
 nameOverride: ""
 fullnameOverride: ""
@@ -28,15 +29,15 @@ ingress:
     enabled: true
   host: plec-demo.dev.numerique-interieur.com
 
-resources: 
+resources:
   limits:
     memory: "512Mi"
-    cpu: "2"  
+    cpu: "2"
   requests:
     memory: "512Mi"
-    cpu: "500Mi"  
+    cpu: "500Mi"
 
-global: 
+global:
   postgresql:
     auth:
       existingSecret: my-secret
@@ -63,13 +64,13 @@ postgresql:
   podSecurityContext:
     enabled: false
   primary:
-    resources: 
+    resources:
       limits:
         memory: "512Mi"
-        cpu: "1"  
+        cpu: "1"
       requests:
         memory: "512Mi"
-        cpu: "1"  
+        cpu: "1"
     volumePermissions:
       enabled: false
       securityContext:

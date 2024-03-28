@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "demo-java-helm.fullname" . }}
+  name: {{ include "demo-java-helm.fullname" . }}-javanaise
   labels:
     {{- include "demo-java-helm.labels" . | nindent 4 }}
-    app: dso-demo-java
+    app: dso-demo-java-javanaise
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       {{- include "demo-java-helm.selectorLabels" . | nindent 6 }}
-      app: dso-demo-java
+      app: dso-demo-java-javanaise
   template:
     metadata:
       labels:
         {{- include "demo-java-helm.selectorLabels" . | nindent 8 }}
-        app: dso-demo-java
+        app: dso-demo-java-javanaise
     spec:
       serviceAccountName: tuto-sa
       serviceAccount: tuto-sa
@@ -25,7 +25,7 @@ spec:
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}/{{ .Values.image.name }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.image.repository }}/javanaise:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             - name: PG_SERVICE
@@ -51,6 +51,3 @@ spec:
               protocol: TCP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-      securityContext:
-        runAsNonRoot: false
-        runAsUser: 0
