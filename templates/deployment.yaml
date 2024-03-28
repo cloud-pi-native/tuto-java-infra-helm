@@ -28,23 +28,15 @@ spec:
           image: "{{ .Values.image.repository }}/{{ .Values.image.name }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            - name: PG_SERVICE
-              value: {{ .Values.postgresql.fullnameOverride }}
-            - name: PG_DATABASE
-              value: {{ .Values.global.postgresql.auth.database }}
-            - name: PG_USER
-              value: {{ .Values.global.postgresql.auth.username }}
-            - name: PG_PASSWORD
+            - name: SPRING_DATASOURCE_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: my-secret
                   key: PG_PASSWORD
             - name: SPRING_DATASOURCE_USERNAME
-              value: $(PG_USER)
-            - name: SPRING_DATASOURCE_PASSWORD
-              value: $(PG_PASSWORD)
+              value: {{ .Values.global.postgresql.auth.username }}
             - name: SPRING_DATASOURCE_URL
-              value: jdbc:postgresql://$(PG_SERVICE):5432/$(PG_DATABASE)
+              value: jdbc:postgresql://{{ .Values.postgresql.fullnameOverride }}:5432/{{ .Values.global.postgresql.auth.database }}
           ports:
             - name: http
               containerPort: 8080
