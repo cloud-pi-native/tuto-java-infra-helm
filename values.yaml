@@ -5,10 +5,10 @@
 replicaCount: 1
 
 image:
-  repository: harbor.apps.c6.numerique-interieur.com/mi-tuto/app-java-forge-dso-demo
+  repository: harbor.apps.dso.numerique-interieur.com/mi-demosign/app
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "master"
+  tag: "demo-sign"
 
 imagePullSecrets: 
   - name: "registry-pull-secret"
@@ -23,7 +23,7 @@ ingress:
   enabled: true
   secret:
     enabled: true
-  host: plec-demo.dev.numerique-interieur.com
+  host: demosign.apps.app1.numerique-interieur.com
 
 resources: 
   limits:
