@@ -35,7 +35,7 @@ Cliquez sur le bouton *Ajouter le dépôt* et attendre que le dépôt apparaisse
 ### Création d'un environnement
 
 Afin de déployer l'application, il est nécessaire de créer un environnement depuis la console. Pour cela, aller dans le menu *Environnements* puis cliquez sur le bouton "+Ajouter un nouvel environnement" :
- - Nom : Donnez un nom logique à l'environnement : demo, dev, integ, prd, etc. Il est conseillé de choisir des noms cours car le nom est utilisé dans les objets Kubernetes créés or ceux-ci sont limité à 63 caractère au total.
+ - Nom : Donnez un nom logique à l'environnement : demo, dev, integ, prd, etc. Il est conseillé de choisir des noms cours car le nom est utilisé dans les objets Kubernetes créés or ceux-ci sont limité à 63 caractère au total. Pour le tutoriel, choisir *tuto*
  - Choisir une zone : sur l'environnement d'accélération, une seule zone est disponible: *Zone défaut*.
  - Type d'environnement: choisir *dev*. Le choix d'un type d'environnement permet de filtre les dimmensionnements proposés
  - Dimensionnement: choisir *small*. le dimensionnement appose un quota de ressource sur le namespace correspondant au projet.
@@ -45,25 +45,31 @@ Cliquez sur le bouton *Ajouter l'environnement* et attendre que l'environnement 
 
 ## Déploiement de l'application
 
-Lorsqu'un projet contient un repo d'infrastructure et (au moins) un environnement, la console crée automatiquement les applications *ArgoCD* associées. Ainsi, depuis le menu gauche  *Services externes* cliquez sur la tuile *ArgoCD DSO* puis le bouton *login via Keycloak* et vérifier que vous retrouvez votre application.
+Lorsqu'un projet contient un repo d'infrastructure et (au moins) un environnement, la console crée automatiquement les applications *ArgoCD* associées. Ainsi, depuis le menu gauche  *Services externes* cliquez sur la tuile *ArgoCD DSO* puis le bouton *login via Keycloak* et vérifier que vous retrouvez votre application et cliquez sur la tuille correspondant à votre application. L'application apparait en erreur, c'est normal à ce stade et nous allons corriger les différents points.
 
-L'application est créée avec un certain nombre de paramètre par défaut qui ne correspondent pas *forcément* à la réalité. Pour cela, depuis l'application, cliquez sur le bouton *Details" en haut à gauche. Ce menu présente les informations principales de l'application ArgoCD :
+L'application est créée avec un certain nombre de paramètre par défaut qui ne correspondent pas *forcément* à la réalité. Pour cela, depuis l'application, cliquez sur le bouton *Details* en haut à gauche. Ce menu présente les informations principales de l'application ArgoCD :
 - Le cluster et le namespace de déploiement
 - Le repo Git associé (repo d'infrastructure)
 - La branche utilisée sur le repo (par defaut *HEAD*)
 - Le répertoire dans lequel chercher les éléments d'infrastructure.
 
+Pour modifier les éléments de cette vue, utilisez le bouton *EDIT* en haut à droite. Attention, ArgoCD rafraichi régulièrement la page et "perd" l'édition en cours.
+
 Les éléments à vérifier de façon générales sont : 
  - La branche utilisée, par defaut il s'agit de la branche principale du repo, mais il est possible suivant le cas de modifier cette branche. Par exemple, pour utiliser la branche develop ou dso du projet, il est possible d'éditer cette information pour remplacer *HEAD* par le nom de la branche à utiliser. Pour notre exemple, utilisez la branche tuto.
  - Le répertoire dans lequel chercher les éléments d'infrastructure : Par defaut, la console prépositionne un répertoire *helm* à la racine du projet. Si ce n'est pas le cas il est possible d'éditer cette information pour remplacer *./helm* par le nom du répertoire contenant le code d'infrastructure. A noter que pour utiliser le dossier "racine" du projet il convient de renseigner "*./*". Pour notre exemple, mettez "*./*"
 
-Validez les modifications en cliquant sur le bouton "*SAVE*" en haut à droite.
+Validez les modifications en cliquant sur le bouton "*SAVE*" en haut à droite. Puis fermer la fenêtre de configuration par la croix en haut à droite pour revenir à l'écran principal d'ArgoCD.
 
 Attendre quelques secondes et les éléments de déploiement devraient arriver dans l'interface principale d'ArgoCD
 
 ## Configuration de l'application
 
-L'application déployée n'est pas fonctionnelle. En effet, un certain nombre d'éléments ne peuvent pas être déduite par avance lors de tutoriel :
+L'application déployée n'est pas fonctionnelle, et certains éléments apparaissent sous la forme d'un petit coeur brisés.
+
+Il est possible de consulter les événements en erreur en cliquant sur le POD puis en allant sur l'onglet *EVENTS*. A noter qu'il est églament possible de consulter les logs des PODS sur l'onglet *LOGS* situé à côté. 
+
+En effet, un certain nombre d'éléments ne peuvent pas être déduite par avance lors de tutoriel :
  - Emplacement de l'image dans le repository *Harbor* car dépendant du nom du projet.
  - URL de déploiement qui est laissée libre au projet.
 
@@ -94,13 +100,46 @@ Adapter le contenu en fonction de votre projet :
  - **ingress.host** : Nom DNS de l'application. Sur l'environnement d'accélération, la génération des DNS et des certiifcats est automatiquement géré en respectant les sous domaines liés aux clusters. La documentation présente ce point [ici](https://gitlab.apps.dso.numerique-interieur.com/forge-mi/transverse/documentation-dso-projets-interne/-/blob/main/specificite-ovh.md?ref_type=heads). Pour le tutoriel, mettre un nom de la forme <NOM_APPLI>.dso-formation.hp.numerique-interieur.com /!\ Attention /!\  ce nom doit être unique.
 
 
-Une fois que ce fichier est créé et commit / push sur le repos git de gitlab, retourner sur argoCD sur son application et cliquez sur le bouton "Details". Dans l'écran qui apparait, choisir l'onglet *PARAMETERS* cliqiuez sur le bouton *EDIT* puis dans values files choisir par autocomplétion le fichier values-tuto.yaml.
+Une fois que ce fichier est créé et commit / push sur le repos git de gitlab, retourner sur argoCD sur son application et cliquez sur le bouton *REFRESH* pour voir apparaitre le message de commit correspondant à la modification ci-dessus.
 
-Sauvegarder et vérifier que le déploiement s'effectue correctement (tout les éléments doivent passer en vert)
+Nous allons maintenant configurer ArgoCD pour utiliser le fichier values-tuto.yaml
+
+Cliquez sur "Details", puis sur l'écran qui apparait, choisir l'onglet *PARAMETERS* cliquez sur le bouton *EDIT* puis dans values files choisir par autocomplétion le fichier values-tuto.yaml.
+
+Sauvegarder et fermer cette fenêtre de configuration pour revenir à l'écran de l'application ArgoCD. Vérifier que le déploiement s'effectue correctement (tout les éléments doivent passer en vert), cela peut prendre quelques secondes.
 
 ### Vérification
 
-Une fois le déploiement terminé et opérationnel, ouvrir un navigateur et vérifier votre l'URL que vous avez saisie dans le fichier *values-tuto.yaml* sur la clé **ingress.host** https://<NOM_APPLI>.dso-formation.hp.numerique-interieur.com/api/demo/demo Si tout est correctement configuré, vous devez avoir une liste au format JSON contenant la liste des personnes présentes en base de données de l'application de tuto.
+Une fois le déploiement terminé et opérationnel, ouvrir un navigateur et vérifier votre l'URL que vous avez saisie dans le fichier *values-tuto.yaml* sur la clé **ingress.host** https://<NOM_APPLI>.dso-formation.hp.numerique-interieur.com/api/demo/demo
+
+Il est également possible, depuis ArgoCD de cliquer sur la 3ème icone de l'objet Ingress qui ouvre directement une nouvelle page sur l'URL de l'application.
+
+Si tout est correctement configuré, vous devez avoir une liste au format JSON contenant la liste des personnes présentes en base de données de l'application de tuto.
+
+```JSON
+[
+{
+"id": 1,
+"name": "Alice"
+},
+{
+"id": 2,
+"name": "Bob"
+},
+{
+"id": 3,
+"name": "Charles"
+},
+{
+"id": 4,
+"name": "Denis"
+},
+{
+"id": 5,
+"name": "Emily"
+}
+]
+```
 
 > Bravo vous avez terminé le tutoriel de déploiement !
 
@@ -208,9 +247,36 @@ Comme on peut le voir le contenu du fichier de secret est chiffré :
 
 > Le fichier *secret.yaml* **ne doit pas être commité / push** sur le repo git alors que le fichier *secret.enc.yaml* peut l'être.
 
-Ajouter le fichier  *secret.enc.yaml* dans le répertoire *templates* du repo d'infra et redéployez, puis depuis ArgoCD faite un refresh / sync afin d'actualiser le contenu des éléments déployer. Vous devriez voir l'objet SopsSecret de créé et un objet Secret associé.
+Créer un fichier  *secret.enc.yaml* dans le répertoire *templates* du repo d'infra et copier / coller le contenu du fichier que vous avez créé en local puis redéployez, puis depuis ArgoCD faite un refresh / sync afin d'actualiser le contenu des éléments déployés. Vous devriez voir l'objet SopsSecret de créé et un objet Secret associé. Vous pouvez consulter le contenu du secret depuis ArgoCD en cliquant sur l'objet secret vous devriez voir le contenu suivant :
+```YAML
+apiVersion: v1
+data:
+  PG_PASSWORD: ++++++++
+  PG_ROOT_PASSWORD: ++++++++
+kind: Secret
+metadata:
+  creationTimestamp: '2025-01-27T15:20:15Z'
+  name: pg-secret-sops
+  namespace: bmgxew1qioi64pw69t3uzmefy--eckznliru9ii2xkqnlwa7lbu0
+  ownerReferences:
+    - apiVersion: isindir.github.com/v1alpha3
+      blockOwnerDeletion: true
+      controller: true
+      kind: SopsSecret
+      name: tuto-sops-secret
+      uid: 07f6095c-9e2a-4540-9ecc-046908b58827
+  resourceVersion: '298243071'
+  uid: ace1ca76-f82f-4c5c-8e04-db79760da941
+type: Opaque
+```
 
-Afin de ne pas entrer en collision avec l'objet Secret *pg-secret* déjà existantn, le nom du secret que nous créé est *pg-secret-sops*. Afin d'utiliser ce secret plutot que le fichier *secret.yaml* déjà existant dans le repo, modifier le fichier deployment.yaml pour changer le nom du secret de *pg-secret* à *pg-secret-sops* :
+Les valeurs du secret ne sont pas directement accessibles et sont remplacés par des caractères '+'.
+
+Afin de ne pas entrer en collision avec l'objet Secret *pg-secret* déjà existant, le nom du secret que nous créé est *pg-secret-sops* et 2 secrets sont maintenant présents sur le projet :
+ - **pg-secret** : le premier secret qui est commité en base64
+ - **pg-secret-sops** : le secret chiffré via SOPS
+
+ Afin d'utiliser le secret **pg-secret-sops** plutot que **pg-secret**, depuis Gitlab modifiez le fichier deployment.yaml pour changer le nom du secret de *pg-secret* à *pg-secret-sops* :
 ```yaml
             - name: SPRING_DATASOURCE_PASSWORD
               valueFrom:
@@ -218,8 +284,9 @@ Afin de ne pas entrer en collision avec l'objet Secret *pg-secret* déjà exista
                   name: pg-secret-sops
                   key: PG_PASSWORD
 ```
+Depuis ArgoCD faite un refresh / sync afin d'actualiser le contenu des éléments déployés, vous devriez voir le POD applicatif être supprimé puis recréé pour utiliser le bon secret.
 
-Vous pouvez maintenant supprimer le fichier secret.yaml du repo gitlab pour ne laisser que le fichier secret.enc.yaml car il n'est plus référencé. Sous argoCD refaite un refresh / sync pour vérifier que l'objet secret pg-secret a bien été supprimé et que le projet continue de fonctionner.
+Vous pouvez maintenant supprimer le fichier **secret.yaml** du repo gitlab puis commit / push pour ne laisser que le fichier secret.enc.yaml car il n'est plus référencé. Sous argoCD refaite un refresh / sync pour vérifier que l'objet secret pg-secret a bien été supprimé et que le projet continue de fonctionner.
 
 > Bravo ! Vous savez maintenant comment gérer les secrets via SOPS dans CPiN !
 
