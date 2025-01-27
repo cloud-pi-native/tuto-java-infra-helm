@@ -43,7 +43,7 @@ Afin de déployer l'application, il est nécessaire de créer un environnement d
 
 Cliquez sur le bouton *Ajouter l'environnement* et attendre que l'environnement soir créé dans la console et apparaisse dans la liste des environnements de son projet.
 
-### Déploiement de l'application
+## Déploiement de l'application
 
 Lorsqu'un projet contient un repo d'infrastructure et (au moins) un environnement, la console crée automatiquement les applications *ArgoCD* associées. Ainsi, depuis le menu gauche  *Services externes* cliquez sur la tuile *ArgoCD DSO* puis le bouton *login via Keycloak* et vérifier que vous retrouvez votre application.
 
@@ -61,7 +61,7 @@ Validez les modifications en cliquant sur le bouton "*SAVE*" en haut à droite.
 
 Attendre quelques secondes et les éléments de déploiement devraient arriver dans l'interface principale d'ArgoCD
 
-### Configuration de l'application
+## Configuration de l'application
 
 L'application déployée n'est pas fonctionnelle. En effet, un certain nombre d'éléments ne peuvent pas être déduite par avance lors de tutoriel :
  - Emplacement de l'image dans le repository *Harbor* car dépendant du nom du projet.
@@ -69,7 +69,7 @@ L'application déployée n'est pas fonctionnelle. En effet, un certain nombre d'
 
 Le chart HELM utilisé prévoit déjà le paramétrage de ces éléments, ce qui doit être le cas de tous les charts HELM utilisés.
 
-#### Ajouter un fichier values-tuto.yaml
+### Ajouter un fichier values-tuto.yaml
 
 Pour des raisons de facilité, nous allons travailler à partir du repo de code de gitlab et non depuis la source, dans un mode projet, il conviendrait de travailler depuis le repo externe et de procéder à des synchronisation repo externe -> repo interne.
 
@@ -98,8 +98,129 @@ Une fois que ce fichier est créé et commit / push sur le repos git de gitlab, 
 
 Sauvegarder et vérifier que le déploiement s'effectue correctement (tout les éléments doivent passer en vert)
 
-#### Vérification
+### Vérification
 
 Une fois le déploiement terminé et opérationnel, ouvrir un navigateur et vérifier votre l'URL que vous avez saisie dans le fichier *values-tuto.yaml* sur la clé **ingress.host** https://<NOM_APPLI>.dso-formation.hp.numerique-interieur.com/api/demo/demo Si tout est correctement configuré, vous devez avoir une liste au format JSON contenant la liste des personnes présentes en base de données de l'application de tuto.
 
 > Bravo vous avez terminé le tutoriel de déploiement !
+
+Nous allons maintenant voir la gestion des secrets
+
+## Gestion des secrets
+
+Dans l'exemple de déploiement, les secrets sont présents "*en clair*" dans un objet Secret. Ce fichier est dans templates/secret.yaml
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: pg-secret
+type: Opaque
+data:
+  PG_PASSWORD: TXlTdXBFclBhU1N3T3Jk
+  PG_ROOT_PASSWORD: TXlTdXBFclBhU1N3T3Jk
+```
+
+Il est possible de décoder facilement la valeur de ces secrets car ils sont encodé en base64 :
+
+```bash
+$ echo TXlTdXBFclBhU1N3T3Jk | base64 -d
+MySupErPaSSwOrd
+```
+
+Cette pratique ne convient pas à une utilisation en production avec des vrais mots de passe. Ainsi, l'offre Cloud Pi Native propose d"utiliser la solution de chiffrement asymétrique [SOPS](https://github.com/getsops/sops) pour chiffrer les secrets. Le principe est que chaque cluster Cloud Pi Native possèdent sa paire de clé privée / publique. le projet chiffre ses secrets en utilisant la clé publique du cluster et lorsque les fichiers chiffrés sont déployés, le cluster les déchiffre car il connait la clé privée associée.
+
+Pour cela nous allons avoir besoin de l'utilitaire [AGE](https://github.com/FiloSottile/age/releases)
+
+De la documentation complémentaire est présente sur le [repo d'exemple](https://github.com/cloud-pi-native/exemples_ServiceTeam/tree/main/secrets/sops) ou sur la documentation [Cloud Pi Native](https://cloud-pi-native.fr/guide/secrets-management)
+
+### Récupération de la clé publique
+
+La clé publique des différents cluster est présente sur le repo Gitlab transverse de Cloud Pi Native [Secrets](https://gitlab.apps.dso.numerique-interieur.com/forge-mi/transverse/documentation-dso-projets-interne) dans le fichier gestion-secrets.md
+
+Récupérer la clé publique du cluster de formation (age19tfqxgdgx3fe96j8fyy0c65nsfj8ku8sl4ccfxnzpn3xpakylg5s8sgac7)
+
+### Création d'un fichier de secret
+
+Créer un fichier sur son poste, nommé *secret.yaml* dont le contenu est le suivant :
+
+```yaml
+apiVersion: isindir.github.com/v1alpha3
+kind: SopsSecret
+metadata:
+  name: tuto-sops-secret
+spec:
+  secretTemplates:
+    - name: pg-secret-sops
+      stringData:
+        PG_PASSWORD: MySupErPaSSwOrd
+        PG_ROOT_PASSWORD: MySupErPaSSwOrd
+```
+Comme on peut le voir on crée un objet de type SopsSecret et non plus Secret dans le champ *kind*
+
+Lancer la commande suivante :
+
+```bash
+sops -e --age age19tfqxgdgx3fe96j8fyy0c65nsfj8ku8sl4ccfxnzpn3xpakylg5s8sgac7 --encrypted-suffix Templates secret.yml > secret.enc.yaml
+```
+
+Cette commande va chiffrer le contenu des clés dont le suffix est Templates avec la clé public passée en paramètre et l'écrire dans un fichier *secret.enc.yaml* Il est important de conserver l'extension du fichier donc "*.enc.yaml*" et pas "*.yaml.enc*" car SOPS se base sur cette extension pour déterminer le contenu du fichier.
+
+Le contenu du fichier *secret.enc.yaml* est le suivant :
+
+```yaml
+apiVersion: isindir.github.com/v1alpha3
+kind: SopsSecret
+metadata:
+    name: tuto-sops-secret
+spec:
+    secretTemplates:
+        - name: ENC[AES256_GCM,data:o1j2+TbiOhCyHuEfyBQ=,iv:ojK6VrN0DAu/ZhijXo5u2ighYP/+8/qWFfW2LMKHFQ0=,tag:IFcB+WaIb0pcZydt1ZYldA==,type:str]
+          stringData:
+            PG_PASSWORD: ENC[AES256_GCM,data:3R8RJzIGf549Q0EUPhg/,iv:4O2i99sb13Dynv20G/SVxJBTZ9HoSPbkLQp1XMxP2Vc=,tag:Wbu4+jESe+lZ+L5VN3OhWQ==,type:str]
+            PG_ROOT_PASSWORD: ENC[AES256_GCM,data:/JGwlXwWiMF3eFY8InBF,iv:yh9e6uQAikBm+Xs0gleyxSZZ+Oi+v/8ax1J+T51MRnU=,tag:8TFLJyiQH7+0yP/m/hzIUg==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age19tfqxgdgx3fe96j8fyy0c65nsfj8ku8sl4ccfxnzpn3xpakylg5s8sgac7
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB3UmpTQ2FxQ3F4KzRIM0oy
+            Q2p1MlFIR25tdlRhZ05TMTc2ZEJmamxTdGw4CkM0NkFRODFHdGNiMU1vYUdUbWlv
+            M1VqSytIQXd0T1ZUdllDaXNlbU5RdncKLS0tIG9HZXoxMEo2eFYzVVBFQ2NuRnZ4
+            aTlHR1FPZ2JrRDJDS25sUjFLMmh1VmsKbgYx2nnTXRLj6TIT2B4vAQUAgAnakWGB
+            qJYKj6+Vv4N2lfBek9to2VKNv7n9gIa4KaxKWZlk+73hwoi6Z6/ozA==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2025-01-27T14:33:22Z"
+    mac: ENC[AES256_GCM,data:Yva1sZYkxUD7D9h6DXpb4Ks8SseNp1gUrSKwsaTo2yvoghLfiJCW0fOdRReCVS3SgwqWi2LwjFGihEsHYFclzBqhGjkOX/zNoWkg5QENZ/5DqlJFlEwkeCNJbF+85T+vIJrP8OQ0qN/3i5Wt4qbOZW0mEhZpRRPlgTPwaJqT+Fw=,iv:rGnChbKV0BHpPpTiB7/MbS3nY24gA/sUAY0aLy4TsFI=,tag:cY2OAfn/A3a0jIYYDcMjhA==,type:str]
+    pgp: []
+    encrypted_suffix: Templates
+    version: 3.8.1
+```
+
+Comme on peut le voir le contenu du fichier de secret est chiffré : 
+```yaml
+  PG_PASSWORD: ENC[AES256_GCM,data:3R8RJzIGf549Q0EUPhg/,iv:4O2i99sb13Dynv20G/SVxJBTZ9HoSPbkLQp1XMxP2Vc=,tag:Wbu4+jESe+lZ+L5VN3OhWQ==,type:str]
+  PG_ROOT_PASSWORD: ENC[AES256_GCM,data:/JGwlXwWiMF3eFY8InBF,iv:yh9e6uQAikBm+Xs0gleyxSZZ+Oi+v/8ax1J+T51MRnU=,tag:8TFLJyiQH7+0yP/m/hzIUg==,type:str]
+```
+
+> Le fichier *secret.yaml* **ne doit pas être commité / push** sur le repo git alors que le fichier *secret.enc.yaml* peut l'être.
+
+Ajouter le fichier  *secret.enc.yaml* dans le répertoire *templates* du repo d'infra et redéployez, puis depuis ArgoCD faite un refresh / sync afin d'actualiser le contenu des éléments déployer. Vous devriez voir l'objet SopsSecret de créé et un objet Secret associé.
+
+Afin de ne pas entrer en collision avec l'objet Secret *pg-secret* déjà existantn, le nom du secret que nous créé est *pg-secret-sops*. Afin d'utiliser ce secret plutot que le fichier *secret.yaml* déjà existant dans le repo, modifier le fichier deployment.yaml pour changer le nom du secret de *pg-secret* à *pg-secret-sops* :
+```yaml
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pg-secret-sops
+                  key: PG_PASSWORD
+```
+
+Vous pouvez maintenant supprimer le fichier secret.yaml du repo gitlab pour ne laisser que le fichier secret.enc.yaml car il n'est plus référencé. Sous argoCD refaite un refresh / sync pour vérifier que l'objet secret pg-secret a bien été supprimé et que le projet continue de fonctionner.
+
+> Bravo ! Vous savez maintenant comment gérer les secrets via SOPS dans CPiN !
+
+Ceci est la fin du tutoriel de déploiement.
