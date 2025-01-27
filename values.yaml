@@ -33,12 +33,14 @@ resources:
     memory: "512Mi"
     cpu: "100m"  
 
-global: 
+global:
   postgresql:
     auth:
-      postgresPassword: "MySupErPaSSwOrd"
+      existingSecret: pg-secret
+      secretKeys:
+        userPasswordKey: "PG_PASSWORD"
+        adminPasswordKey: "PG_ROOT_PASSWORD"
       username: "userdemo"
-      password: "passworddemo"
       database: "demodb"
 
 # Contrainte de sécurité Openshift

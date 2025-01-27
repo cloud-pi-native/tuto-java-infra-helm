@@ -32,12 +32,13 @@ spec:
               value: {{ .Values.global.postgresql.auth.database }}
             - name: PG_USER
               value: {{ .Values.global.postgresql.auth.username }}
-            - name: PG_PASSWORD
-              value: {{ .Values.global.postgresql.auth.password }}
             - name: SPRING_DATASOURCE_USERNAME
               value: $(PG_USER)
             - name: SPRING_DATASOURCE_PASSWORD
-              value: $(PG_PASSWORD)
+              valueFrom:
+                secretKeyRef:
+                  name: pg-secret
+                  key: PG_PASSWORD
             - name: SPRING_DATASOURCE_URL
               value: jdbc:postgresql://$(PG_SERVICE):5432/$(PG_DATABASE)
           ports:
