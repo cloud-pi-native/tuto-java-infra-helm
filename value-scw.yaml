@@ -2,10 +2,10 @@ image:
   repository: harbor.apps.dso.numerique-interieur.com/form-formation11/java-demo
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "tuto"
+  tag: "master"
 
 ingress:
-  host: formation11.apps.dso-formation.hp.numerique-interieur.com
+  host: test.formation-app.cpin.numerique-interieur.com
 
 # Contrainte de sécurité Openshift
 postgresql:
