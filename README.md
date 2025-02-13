@@ -213,7 +213,7 @@ De la documentation complémentaire est présente sur le [repo d'exemple](https:
 
 La clé publique des différents cluster est présente sur le repo Gitlab transverse de Cloud Pi Native [Secrets](https://gitlab.apps.dso.numerique-interieur.com/forge-mi/transverse/documentation-dso-projets-interne) dans le fichier gestion-secrets.md
 
-Récupérer la clé publique du cluster de formation (age19tfqxgdgx3fe96j8fyy0c65nsfj8ku8sl4ccfxnzpn3xpakylg5s8sgac7)
+Récupérer la clé publique du cluster de formation sur OVH (age19tfqxgdgx3fe96j8fyy0c65nsfj8ku8sl4ccfxnzpn3xpakylg5s8sgac7) ou (age1qt7e329qjlhqsfsyxsvws56ukp2f9h0ktmj45atleqk0q406mfhstwnudv) sur SCW
 
 ### Création d'un fichier de secret
 
@@ -233,11 +233,18 @@ spec:
 ```
 Comme on peut le voir on crée un objet de type SopsSecret et non plus Secret dans le champ *kind*
 
-Lancer la commande suivante :
+Lancer la commande suivante sur OVH:
 
 ```bash
 sops -e --age age19tfqxgdgx3fe96j8fyy0c65nsfj8ku8sl4ccfxnzpn3xpakylg5s8sgac7 --encrypted-suffix Templates secret.yml > secret.enc.yaml
 ```
+
+Lancer la commande suivante sur OVH:
+
+```bash
+sops -e --age age1qt7e329qjlhqsfsyxsvws56ukp2f9h0ktmj45atleqk0q406mfhstwnudv --encrypted-suffix Templates secret.yml > secret.enc.yaml
+```
+
 
 Cette commande va chiffrer le contenu des clés dont le suffix est Templates avec la clé public passée en paramètre et l'écrire dans un fichier *secret.enc.yaml* Il est important de conserver l'extension du fichier donc "*.enc.yaml*" et pas "*.yaml.enc*" car SOPS se base sur cette extension pour déterminer le contenu du fichier.
 
