@@ -328,6 +328,18 @@ Afin de ne pas entrer en collision avec l'objet Secret *pg-secret* déjà exista
                   name: pg-secret-sops
                   key: PG_PASSWORD
 ```
+De même le secret **pg-secret** est référencé par postgres dans le fichier values.yaml du chart helm :
+```yaml
+[...]
+global:
+  postgresql:
+    auth:
+      existingSecret: pg-secret
+[...]
+```
+
+Il convient de modifier cette valeur par  **pg-secret-sops** ou de surcharger la clé global.postgresql.auth.existingSecret dans le fichier values-tuto.yaml
+
 Depuis ArgoCD faite un refresh / sync afin d'actualiser le contenu des éléments déployés, vous devriez voir le POD applicatif être supprimé puis recréé pour utiliser le bon secret.
 
 Vous pouvez maintenant supprimer le fichier **secret.yaml** du repo gitlab puis commit / push pour ne laisser que le fichier secret.enc.yaml car il n'est plus référencé. Sous argoCD refaite un refresh / sync pour vérifier que l'objet secret pg-secret a bien été supprimé et que le projet continue de fonctionner.
