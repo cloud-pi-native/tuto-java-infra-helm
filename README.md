@@ -147,7 +147,7 @@ Sauvegarder et fermer cette fenêtre de configuration pour revenir à l'écran d
 
 ### Vérification
 
-Une fois le déploiement terminé et opérationnel, ouvrir un navigateur et vérifier votre l'URL que vous avez saisie dans le fichier *values-tuto.yaml* sur la clé **ingress.host** https://<NOM_APPLI>.dso-formation.hp.numerique-interieur.com/api/demo/demo
+Une fois le déploiement terminé et opérationnel, ouvrir un navigateur et vérifier votre l'URL que vous avez saisie dans le fichier *values-tuto.yaml* sur la clé **ingress.host** https://<NOM_APPLI>.formation-app.hp.numerique-interieur.com/api/demo/demo
 
 Il est également possible, depuis ArgoCD de cliquer sur la 3ème icone de l'objet Ingress qui ouvre directement une nouvelle page sur l'URL de l'application.
 
