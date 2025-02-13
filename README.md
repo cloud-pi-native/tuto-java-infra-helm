@@ -316,7 +316,7 @@ type: Opaque
 
 Les valeurs du secret ne sont pas directement accessibles et sont remplacés par des caractères '+'.
 
-Afin de ne pas entrer en collision avec l'objet Secret *pg-secret* déjà existant, le nom du secret que nous créé est *pg-secret-sops* et 2 secrets sont maintenant présents sur le projet :
+Afin de ne pas entrer en collision avec l'objet Secret *pg-secret* déjà existant, le nom du secret que nous avons créé est *pg-secret-sops* et 2 secrets sont maintenant présents sur le projet :
  - **pg-secret** : le premier secret qui est commité en base64
  - **pg-secret-sops** : le secret chiffré via SOPS
 
