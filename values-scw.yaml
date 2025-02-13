@@ -5,7 +5,7 @@ image:
   tag: "master"
 
 ingress:
-  host: test-formation-app.cpin.numerique-interieur.com
+  host: test.formation-app.cpin.numerique-interieur.com
 
 # Contrainte de sécurité Openshift
 postgresql:
