@@ -26,7 +26,7 @@ Dans un premier temps il est nécessaire d'ajouter le *repo de code* d'infrastru
 
 Le repo contient du code d'infrastructure donc cochez la case *Dépôt contenant du code d'infrastructure*.
 
-2. Renseigner *l'URL du repo externe* [https://github.com/cloud-pi-native/tuto-java-infra-helm.git](https://github.com/cloud-pi-native/tuto-java-infra-helm.git). Le repo est public, laissez donc décocher la case *Dépôt de source privé*
+2. Renseigner *l'URL du repo externe* [https://github.com/cloud-pi-native/tuto-java-infra-helm.git](https://github.com/cloud-pi-native/tuto-java-infra-helm.git). Le repo est public, laissez donc décoché la case *Dépôt de source privé*
 
 Cliquez sur le bouton *Ajouter le dépôt* et attendre que le dépôt apparaisse dans la console.
 
@@ -45,7 +45,7 @@ Cliquez sur le bouton *Ajouter l'environnement* et attendre que l'environnement 
 
 ## Déploiement de l'application
 
-Lorsqu'un projet contient un repo d'infrastructure et (au moins) un environnement, la console crée automatiquement les applications *ArgoCD* associées. Ainsi, depuis le menu gauche  *Services externes* cliquez sur la tuile *ArgoCD DSO* puis le bouton *login via Keycloak* et vérifier que vous retrouvez votre application et cliquez sur la tuille correspondant à votre application. L'application apparait en erreur, c'est normal à ce stade et nous allons corriger les différents points.
+Lorsqu'un projet contient un repo d'infrastructure et (au moins) un environnement, la console crée automatiquement les applications *ArgoCD* associées. Ainsi, depuis le menu gauche  *Services externes* cliquez sur la tuile *ArgoCD DSO* puis le bouton *login via Keycloak* et vérifier que vous retrouvez votre application et cliquez sur la tuile correspondant à votre application. L'application apparait en erreur, c'est normal à ce stade et nous allons corriger les différents points.
 
 L'application est créée avec un certain nombre de paramètre par défaut qui ne correspondent pas *forcément* à la réalité. Pour cela, depuis l'application, cliquez sur le bouton *Details* en haut à gauche. Ce menu présente les informations principales de l'application ArgoCD :
 - Le cluster et le namespace de déploiement
@@ -65,7 +65,7 @@ Attendre quelques secondes et les éléments de déploiement devraient arriver d
 
 ## Configuration de l'application
 
-L'application déployée n'est pas fonctionnelle, et certains éléments apparaissent sous la forme d'un petit coeur brisés.
+L'application déployée n'est pas fonctionnelle, et certains éléments apparaissent sous la forme d'un petit coeur brisé.
 
 Il est possible de consulter les événements en erreur en cliquant sur le POD puis en allant sur l'onglet *EVENTS*. A noter qu'il est églament possible de consulter les logs des PODS sur l'onglet *LOGS* situé à côté. 
 
