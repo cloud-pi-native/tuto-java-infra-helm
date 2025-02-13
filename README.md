@@ -65,7 +65,7 @@ Attendre quelques secondes et les éléments de déploiement devraient arriver d
 
 ## Configuration de l'application
 
-L'application déployée n'est pas fonctionnelle, et certains éléments apparaissent sous la forme d'un petit coeur brisés.
+L'application déployée n'est pas fonctionnelle, et certains éléments apparaissent sous la forme d'un petit coeur brisé.
 
 Il est possible de consulter les événements en erreur en cliquant sur le POD puis en allant sur l'onglet *EVENTS*. A noter qu'il est églament possible de consulter les logs des PODS sur l'onglet *LOGS* situé à côté. 
 
