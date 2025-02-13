@@ -45,7 +45,7 @@ Cliquez sur le bouton *Ajouter l'environnement* et attendre que l'environnement 
 
 ## Déploiement de l'application
 
-Lorsqu'un projet contient un repo d'infrastructure et (au moins) un environnement, la console crée automatiquement les applications *ArgoCD* associées. Ainsi, depuis le menu gauche  *Services externes* cliquez sur la tuile *ArgoCD DSO* puis le bouton *login via Keycloak* et vérifier que vous retrouvez votre application et cliquez sur la tuille correspondant à votre application. L'application apparait en erreur, c'est normal à ce stade et nous allons corriger les différents points.
+Lorsqu'un projet contient un repo d'infrastructure et (au moins) un environnement, la console crée automatiquement les applications *ArgoCD* associées. Ainsi, depuis le menu gauche  *Services externes* cliquez sur la tuile *ArgoCD DSO* puis le bouton *login via Keycloak* et vérifier que vous retrouvez votre application et cliquez sur la tuile correspondant à votre application. L'application apparait en erreur, c'est normal à ce stade et nous allons corriger les différents points.
 
 L'application est créée avec un certain nombre de paramètre par défaut qui ne correspondent pas *forcément* à la réalité. Pour cela, depuis l'application, cliquez sur le bouton *Details* en haut à gauche. Ce menu présente les informations principales de l'application ArgoCD :
 - Le cluster et le namespace de déploiement
