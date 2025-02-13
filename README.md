@@ -91,6 +91,41 @@ image:
 
 ingress:
   host: tuto.apps.dso-formation.hp.numerique-interieur.com
+
+# Contrainte de sécurité Openshift
+postgresql:
+  primary:
+    containerSecurityContext:
+      enabled: true
+    podSecurityContext:
+      enabled: true
+  volumePermissions:
+    enabled: false
+    securityContext:
+      runAsUser: "1001"
+  securityContext:
+    enabled: true
+  shmVolume:
+    chmod:
+      enabled: false
+  containerSecurityContext:
+    enabled: true
+  podSecurityContext:
+    enabled: true
+    volumePermissions:
+      enabled: true
+      securityContext:
+        runAsUser: "1001"
+    securityContext:
+      enabled: true
+    shmVolume:
+      chmod:
+        enabled: false
+    containerSecurityContext:
+      enabled: true
+    podSecurityContext:
+      enabled: true
+
 ```
 
 Adapter le contenu en fonction de votre projet :
@@ -98,6 +133,8 @@ Adapter le contenu en fonction de votre projet :
  - **image.pullPolicy** : Correspond à la politique de téléchargement de l'image lors du déploiement, laisser à la valeur "Always" pour être sûr de récupérer toujours la dernière version de l'image. En mode projet, une politique de tag immutable est fortement conseillée et donc la politique de déploiement pourra passer à *IfNotPresent*. Dans le cadre de ce tuto, laisser *Always*
  - **tag**: tag de l'image associé à **image.repository**, pour le tuto mettre *tuto*
  - **ingress.host** : Nom DNS de l'application. Sur l'environnement d'accélération, la génération des DNS et des certiifcats est automatiquement géré en respectant les sous domaines liés aux clusters. La documentation présente ce point [ici](https://gitlab.apps.dso.numerique-interieur.com/forge-mi/transverse/documentation-dso-projets-interne/-/blob/main/specificite-ovh.md?ref_type=heads). Pour le tutoriel, mettre un nom de la forme <NOM_APPLI>.dso-formation.hp.numerique-interieur.com /!\ Attention /!\  ce nom doit être unique.
+
+> Le bloc postgres est à ajouter en l'état pour permettre un déploiement de postgres sur un cluster kubernetes "sécurisé en mode openshift" ce qui est le cas pour l'environnement Scaleway.
 
 
 Une fois que ce fichier est créé et commit / push sur le repos git de gitlab, retourner sur argoCD sur son application et cliquez sur le bouton *REFRESH* pour voir apparaitre le message de commit correspondant à la modification ci-dessus.
