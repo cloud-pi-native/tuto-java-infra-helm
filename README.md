@@ -26,7 +26,7 @@ Dans un premier temps il est nécessaire d'ajouter le *repo de code* d'infrastru
 
 Le repo contient du code d'infrastructure donc cochez la case *Dépôt contenant du code d'infrastructure*.
 
-2. Renseigner *l'URL du repo externe* [https://github.com/cloud-pi-native/tuto-java-infra-helm.git](https://github.com/cloud-pi-native/tuto-java-infra-helm.git). Le repo est public, laissez donc décocher la case *Dépôt de source privé*
+2. Renseigner *l'URL du repo externe* [https://github.com/cloud-pi-native/tuto-java-infra-helm.git](https://github.com/cloud-pi-native/tuto-java-infra-helm.git). Le repo est public, laissez donc décoché la case *Dépôt de source privé*
 
 Cliquez sur le bouton *Ajouter le dépôt* et attendre que le dépôt apparaisse dans la console.
 
