@@ -233,13 +233,13 @@ spec:
 ```
 Comme on peut le voir on crée un objet de type SopsSecret et non plus Secret dans le champ *kind*
 
-Lancer la commande suivante sur OVH:
+Lancer la commande suivante pour un déploiement sur OVH formation :
 
 ```bash
 sops -e --age age19tfqxgdgx3fe96j8fyy0c65nsfj8ku8sl4ccfxnzpn3xpakylg5s8sgac7 --encrypted-suffix Templates secret.yml > secret.enc.yaml
 ```
 
-Lancer la commande suivante sur OVH:
+Lancer la commande suivante pour un déploiement sur Scaleway formation :
 
 ```bash
 sops -e --age age1qt7e329qjlhqsfsyxsvws56ukp2f9h0ktmj45atleqk0q406mfhstwnudv --encrypted-suffix Templates secret.yml > secret.enc.yaml
