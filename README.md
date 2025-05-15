@@ -39,7 +39,7 @@ Afin de déployer l'application, il est nécessaire de créer un environnement d
  - Choisir une zone : sur l'environnement d'accélération, une seule zone est disponible: *Zone défaut*.
  - Type d'environnement: choisir *dev*. Le choix d'un type d'environnement permet de filtre les dimmensionnements proposés
  - Dimensionnement: choisir *small*. le dimensionnement appose un quota de ressource sur le namespace correspondant au projet.
- - Cluster : choisir le cluster *formation-ovh* (ce cluster est dédié aux exercices et peut être facilement purgé)
+ - Cluster : choisir le cluster *formation-app* (ce cluster est dédié aux exercices et peut être facilement purgé)
 
 Cliquez sur le bouton *Ajouter l'environnement* et attendre que l'environnement soir créé dans la console et apparaisse dans la liste des environnements de son projet.
 
@@ -132,7 +132,7 @@ Adapter le contenu en fonction de votre projet :
  - **image.repository** : correspond à l'emplacement de l'image construite dans le tuto précédent et deployer sur Harbor. Pour connaitre l'emplacement, depuis la console, aller sur le menu *Tableau de bord* de son projet puis cliquez sur le bouton *Afficher les secrets des services* dans le bloc *Harbor* est précisé la racine de déploiement des images du projet, par exemple *harbor.apps.dso.numerique-interieur.com/mi-service-team/*. Attention, lors de la modification de conserver le nom de l'image construite (/java-demo) dans l'URL du repo par exemple harbor.formation.cpin.numerique-interieur.com/test-prj/**java-demo**
  - **image.pullPolicy** : Correspond à la politique de téléchargement de l'image lors du déploiement, laisser à la valeur "Always" pour être sûr de récupérer toujours la dernière version de l'image. En mode projet, une politique de tag immutable est fortement conseillée et donc la politique de déploiement pourra passer à *IfNotPresent*. Dans le cadre de ce tuto, laisser *Always*
  - **tag**: tag de l'image associé à **image.repository**, pour le tuto mettre *tuto*
- - **ingress.host** : Nom DNS de l'application. Sur l'environnement d'accélération, la génération des DNS et des certiifcats est automatiquement géré en respectant les sous domaines liés aux clusters. La documentation présente ce point [ici](https://gitlab.apps.dso.numerique-interieur.com/forge-mi/transverse/documentation-dso-projets-interne/-/blob/main/specificite-ovh.md?ref_type=heads). Pour le tutoriel, mettre un nom de la forme <NOM_APPLI>.dso-formation.hp.numerique-interieur.com /!\ Attention /!\  ce nom doit être unique.
+ - **ingress.host** : Nom DNS de l'application. Sur l'environnement d'accélération, la génération des DNS et des certiifcats est automatiquement géré en respectant les sous domaines liés aux clusters. La documentation présente ce point [ici](https://gitlab.formation.cpin.numerique-interieur.com/forge-mi/projects/documentation/documentation-pax/-/blob/main/specificite-public-cloud.md?ref_type=heads). Pour le tutoriel, mettre un nom de la forme <NOM_APPLI>.dso-formation.hp.numerique-interieur.com /!\ Attention /!\  ce nom doit être unique.
 
 > Le bloc postgres est à ajouter en l'état pour permettre un déploiement de postgres sur un cluster kubernetes "sécurisé en mode openshift" ce qui est le cas pour l'environnement Scaleway.
 
@@ -213,7 +213,7 @@ De la documentation complémentaire est présente sur le [repo d'exemple](https:
 
 La clé publique des différents cluster est présente sur le repo Gitlab transverse de Cloud Pi Native [Secrets](https://gitlab.apps.dso.numerique-interieur.com/forge-mi/transverse/documentation-dso-projets-interne) dans le fichier gestion-secrets.md
 
-Récupérer la clé publique du cluster de formation sur OVH (age19tfqxgdgx3fe96j8fyy0c65nsfj8ku8sl4ccfxnzpn3xpakylg5s8sgac7) ou (age1qt7e329qjlhqsfsyxsvws56ukp2f9h0ktmj45atleqk0q406mfhstwnudv) sur SCW
+Récupérer la clé publique du cluster de formation (age1qt7e329qjlhqsfsyxsvws56ukp2f9h0ktmj45atleqk0q406mfhstwnudv) sur SCW
 
 ### Création d'un fichier de secret
 
