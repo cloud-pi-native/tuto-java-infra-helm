@@ -39,7 +39,7 @@ Afin de déployer l'application, il est nécessaire de créer un environnement d
  - Choisir une zone : sur l'environnement d'accélération, une seule zone est disponible: *Zone défaut*.
  - Type d'environnement: choisir *dev*. Le choix d'un type d'environnement permet de filtre les dimmensionnements proposés
  - Dimensionnement: choisir *small*. le dimensionnement appose un quota de ressource sur le namespace correspondant au projet.
- - Cluster : choisir le cluster *formation-ovh* (ce cluster est dédié aux exercices et peut être facilement purgé)
+ - Cluster : choisir le cluster *formation-app* (ce cluster est dédié aux exercices et peut être facilement purgé)
 
 Cliquez sur le bouton *Ajouter l'environnement* et attendre que l'environnement soir créé dans la console et apparaisse dans la liste des environnements de son projet.
 
