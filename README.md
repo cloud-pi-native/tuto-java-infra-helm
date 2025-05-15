@@ -90,7 +90,7 @@ image:
   tag: "master"
 
 ingress:
-  host: tuto.apps.dso-formation.hp.numerique-interieur.com
+  host: tuto.formation-app.cpin.numerique-interieur.com
 
 # Contrainte de sécurité Openshift
 postgresql:
@@ -132,7 +132,7 @@ Adapter le contenu en fonction de votre projet :
  - **image.repository** : correspond à l'emplacement de l'image construite dans le tuto précédent et deployer sur Harbor. Pour connaitre l'emplacement, depuis la console, aller sur le menu *Tableau de bord* de son projet puis cliquez sur le bouton *Afficher les secrets des services* dans le bloc *Harbor* est précisé la racine de déploiement des images du projet, par exemple *harbor.apps.dso.numerique-interieur.com/mi-service-team/*. Attention, lors de la modification de conserver le nom de l'image construite (/java-demo) dans l'URL du repo par exemple harbor.formation.cpin.numerique-interieur.com/test-prj/**java-demo**
  - **image.pullPolicy** : Correspond à la politique de téléchargement de l'image lors du déploiement, laisser à la valeur "Always" pour être sûr de récupérer toujours la dernière version de l'image. En mode projet, une politique de tag immutable est fortement conseillée et donc la politique de déploiement pourra passer à *IfNotPresent*. Dans le cadre de ce tuto, laisser *Always*
  - **tag**: tag de l'image associé à **image.repository**, pour le tuto mettre *tuto*
- - **ingress.host** : Nom DNS de l'application. Sur l'environnement d'accélération, la génération des DNS et des certiifcats est automatiquement géré en respectant les sous domaines liés aux clusters. La documentation présente ce point [ici](https://gitlab.formation.cpin.numerique-interieur.com/forge-mi/projects/documentation/documentation-pax/-/blob/main/specificite-public-cloud.md?ref_type=heads). Pour le tutoriel, mettre un nom de la forme <NOM_APPLI>.dso-formation.hp.numerique-interieur.com /!\ Attention /!\  ce nom doit être unique.
+ - **ingress.host** : Nom DNS de l'application. Sur l'environnement d'accélération, la génération des DNS et des certiifcats est automatiquement géré en respectant les sous domaines liés aux clusters. La documentation présente ce point [ici](https://gitlab.formation.cpin.numerique-interieur.com/forge-mi/projects/documentation/documentation-pax/-/blob/main/specificite-public-cloud.md?ref_type=heads). Pour le tutoriel, mettre un nom de la forme <NOM_APPLI>.formation-app.cpin.numerique-interieur.com /!\ Attention /!\  ce nom doit être unique.
 
 > Le bloc postgres est à ajouter en l'état pour permettre un déploiement de postgres sur un cluster kubernetes "sécurisé en mode openshift" ce qui est le cas pour l'environnement Scaleway.
 
@@ -147,7 +147,7 @@ Sauvegarder et fermer cette fenêtre de configuration pour revenir à l'écran d
 
 ### Vérification
 
-Une fois le déploiement terminé et opérationnel, ouvrir un navigateur et vérifier votre l'URL que vous avez saisie dans le fichier *values-tuto.yaml* sur la clé **ingress.host** https://<NOM_APPLI>.formation-app.hp.numerique-interieur.com/api/demo/demo
+Une fois le déploiement terminé et opérationnel, ouvrir un navigateur et vérifier votre l'URL que vous avez saisie dans le fichier *values-tuto.yaml* sur la clé **ingress.host** https://<NOM_APPLI>.formation-app.cpin.numerique-interieur.com/api/demo/demo
 
 Il est également possible, depuis ArgoCD de cliquer sur la 3ème icone de l'objet Ingress qui ouvre directement une nouvelle page sur l'URL de l'application.
 
