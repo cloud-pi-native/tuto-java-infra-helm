@@ -211,7 +211,7 @@ De la documentation complémentaire est présente sur le [repo d'exemple](https:
 
 ### Récupération de la clé publique
 
-La clé publique des différents cluster est présente sur le repo Gitlab transverse de Cloud Pi Native [Secrets](https://gitlab.apps.dso.numerique-interieur.com/forge-mi/transverse/documentation-dso-projets-interne) dans le fichier gestion-secrets.md
+La clé publique des différents clusters est présente dans la console Cloud Pi dans les informations du cluster.
 
 Récupérer la clé publique du cluster de formation (age1qt7e329qjlhqsfsyxsvws56ukp2f9h0ktmj45atleqk0q406mfhstwnudv) sur SCW
 
