@@ -1,0 +1,13 @@
+image:
+  repository: harbor.formation.cpin.numerique-interieur.com/tutoplec/java-demo
+  pullPolicy: Always
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "main"
+
+ingress:
+  enabled: true
+  host: plec-ingress.formation-app-gateway.cpin.numerique-interieur.com
+
+httpRoute:
+  enabled: true
+  host: plec-httproute.formation-app-gateway.cpin.numerique-interieur.com
