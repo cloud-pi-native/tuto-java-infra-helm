@@ -6,7 +6,7 @@ image:
 
 ingress:
   enabled: true
-  host: plec-ingress.formation-app-gateway.cpin.numerique-interieur.com
+  host: plec-ingress.formation-app.cpin.numerique-interieur.com
 
 httpRoute:
   enabled: true
