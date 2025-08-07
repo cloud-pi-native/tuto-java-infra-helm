@@ -1,4 +1,4 @@
-
+{{- if .Values.httpRoute.enabled -}}
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: BackendTrafficPolicy
 metadata:
@@ -14,3 +14,15 @@ spec:
     abort:
       httpStatus: 501
       percentage: 50
+  rateLimit:
+    type: Global
+    global:
+      rules:
+      - clientSelectors:
+        - headers:
+          - name: x-user-id
+            value: one
+        limit:
+          requests: 3
+          unit: Hour
+{{- end }}

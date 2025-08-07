@@ -1,0 +1,19 @@
+{{- if .Values.httpRoute.enabled -}}
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: apikey-auth-example
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: plec-http-route
+  apiKeyAuth:
+    credentialRefs:
+    - group: ""
+      kind: Secret
+      name: auth
+    extractFrom:
+    - headers:
+      - x-api-key
+{{- end }}
