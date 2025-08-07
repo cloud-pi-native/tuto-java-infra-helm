@@ -9,7 +9,10 @@ image:
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "master"
-
+httpRoute:
+  enabled: false
+  host: localhost
+  
 imagePullSecrets: 
   - name: "registry-pull-secret"
 nameOverride: ""

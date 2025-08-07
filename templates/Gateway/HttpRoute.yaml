@@ -7,7 +7,8 @@ metadata:
   name: plec-http-route
 spec:
   parentRefs:
-  - name: eg
+  - name: default-gateway
+    namespace: infra-envoy-gateway-system
   hostnames:
   - {{ .Values.httpRoute.host }}
   rules:
