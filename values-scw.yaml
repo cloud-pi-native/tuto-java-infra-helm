@@ -9,6 +9,8 @@ ingress:
 
 # Contrainte de sécurité Openshift
 postgresql:
+  image:
+    repository: bitnamilegacy/postgresql
   primary:
     containerSecurityContext:
       enabled: true
