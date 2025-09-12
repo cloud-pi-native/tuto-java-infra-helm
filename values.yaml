@@ -48,6 +48,8 @@ global:
 
 # Contrainte de sécurité scw
 postgresql:
+  image:
+    repository: bitnamilegacy/postgresql
   fullnameOverride: postgres-demo
   volumePermissions:
     enabled: false
