@@ -94,9 +94,19 @@ ingress:
 
 # Contrainte de sécurité Openshift
 postgresql:
+  image:
+    repository: bitnamilegacy/postgresql
   primary:
     containerSecurityContext:
       enabled: true
+      privileged: false
+      allowPrivilegeEscalation: false
+      seccompProfile:
+        type: RuntimeDefault
+      capabilities:
+        drop:
+          - ALL
+      runAsNonRoot: true
     podSecurityContext:
       enabled: true
   volumePermissions:
