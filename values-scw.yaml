@@ -25,7 +25,7 @@ postgresql:
     podSecurityContext:
       enabled: true
   volumePermissions:
-    enabled: true
+    enabled: false
     securityContext:
       runAsUser: "1001"
   securityContext:
