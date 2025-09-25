@@ -9,6 +9,8 @@ ingress:
 
 # Contrainte de sécurité Openshift
 postgresql:
+  commonLabels:
+    sidecar.istio.io/inject: "true"
   image:
     repository: bitnamilegacy/postgresql
   primary:
