@@ -1,0 +1,28 @@
+---
+apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata:
+  name: postgres
+spec:
+  host: postgres-demo
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+---
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: postgres
+spec:
+  exportTo:
+    - "."
+  hosts: ["postgres-demo"]
+  tcp:
+  - match:
+    - port: 5432
+    route:
+    - destination:
+        host: postgres-demo
+        port:
+          number: 5432
+  
