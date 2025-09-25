@@ -25,7 +25,8 @@ postgresql:
     podSecurityContext:
       enabled: true
   volumePermissions:
-    repository: bitnamilegacy/bitnami-shell
+    image:
+      repository: bitnamilegacy/bitnami-shell
     enabled: true
     securityContext:
       runAsUser: "1001"
