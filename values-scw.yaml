@@ -10,7 +10,8 @@ ingress:
 # Contrainte de sécurité Openshift
 postgresql:
   commonLabels:
-    sidecar.istio.io/inject: "true"
+    # sidecar.istio.io/inject: "true"
+    istio.io/dataplane-mode: "ambient"
   image:
     repository: bitnamilegacy/postgresql
   primary:
