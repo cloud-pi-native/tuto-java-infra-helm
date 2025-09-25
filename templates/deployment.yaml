@@ -16,6 +16,7 @@ spec:
       labels:
         {{- include "demo-java-helm.selectorLabels" . | nindent 8 }}
         app: dso-demo-java
+        sidecar.istio.io/inject: "true"
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
