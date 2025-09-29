@@ -2,7 +2,10 @@
 apiVersion: security.istio.io/v1
 kind: PeerAuthentication
 metadata:
-  name: local-peer-authentication
+  name: strict-peer-authentication
 spec:
+  selector:
+    matchLabels:
+      dso/project.slug: tutoplec
   mtls:
     mode: STRICT
