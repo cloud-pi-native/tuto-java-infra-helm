@@ -84,10 +84,10 @@ Pour des raisons de facilité, nous allons travailler à partir du repo de code 
 2. Ajouter le contenu suivant: 
 ```yaml
 image:
-  repository: harbor.apps.dso.numerique-interieur.com/form-tuto/java-demo
+  repository: harbor.formation.dso.numerique-interieur.com/form-tuto/java-demo
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "master"
+  tag: "tuto"
 
 ingress:
   host: tuto.formation-app.cpin.numerique-interieur.com
