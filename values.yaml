@@ -36,6 +36,10 @@ resources:
 postgres:
   fullnameOverride: postgres
 
+  auth:
+    username: "userdemo"
+    database: "userdemo"
+
   resources: 
     limits:
       memory: "512Mi"
