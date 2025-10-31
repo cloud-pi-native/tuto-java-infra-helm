@@ -33,63 +33,43 @@ resources:
     memory: "512Mi"
     cpu: "100m"  
 
-global:
-  postgresql:
-    auth:
-      existingSecret: pg-secret
-      secretKeys:
-        userPasswordKey: "PG_PASSWORD"
-        adminPasswordKey: "PG_ROOT_PASSWORD"
-      username: "userdemo"
-      database: "demodb"
+postgres:
+  fullnameOverride: postgres
 
-# Contrainte de sécurité scw
-postgresql:
-  fullnameOverride: postgres-demo
-  volumePermissions:
-    enabled: false
-    securityContext:
-      runAsUser: "1001"
-  securityContext:
-    enabled: true
-  shmVolume:
-    chmod:
-      enabled: false
+  resources: 
+    limits:
+      memory: "512Mi"
+      cpu: "500m"
+    requests:
+      memory: "512Mi"
+      cpu: "100m"
+
   containerSecurityContext:
+    containerSecurityContext:
+      enabled: true
     enabled: true
+    fsGroup: 99999
+    podSecurityContext:
+      enabled: true
+    securityContext:
+      enabled: true
+    shmVolume:
+      chmod:
+        enabled: false
+    volumePermissions:
+      enabled: true
+      securityContext:
+        runAsUser: '99999' 
+
   podSecurityContext:
     enabled: true
-    volumePermissions:
-      enabled: true
-      securityContext:
-        runAsUser: "1001"
-    securityContext:
-      enabled: true
-    shmVolume:
-      chmod:
-        enabled: false
-    containerSecurityContext:
-      enabled: true
-    podSecurityContext:
-      enabled: true
-  primary:
-    resources: 
-      limits:
-        memory: "512Mi"
-        cpu: "500m"
-      requests:
-        memory: "256Mi"
-        cpu: "200m"
-    volumePermissions:
-      enabled: false
-      securityContext:
-        runAsUser: "1001"
-    securityContext:
-      enabled: false
-    shmVolume:
-      chmod:
-        enabled: false
-    containerSecurityContext:
-      enabled: true
-    podSecurityContext:
-      enabled: true
+    privileged: false
+    allowPrivilegeEscalation: false
+    seccompProfile:
+      type: RuntimeDefault
+    capabilities:
+      drop:
+        - ALL
+    runAsNonRoot: true
+    runAsUser: 99999
+    runAsGroup: 99999
