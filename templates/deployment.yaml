@@ -27,11 +27,11 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             - name: PG_SERVICE
-              value: {{ .Values.postgresql.fullnameOverride }}
+              value: {{ .Values.postgres.fullnameOverride }}
             - name: PG_DATABASE
-              value: {{ .Values.global.postgresql.auth.database }}
+              value: {{ .Values.postgres.auth.database }}
             - name: PG_USER
-              value: {{ .Values.global.postgresql.auth.username }}
+              value: {{ .Values.postgres.auth.username }}
             - name: SPRING_DATASOURCE_USERNAME
               value: $(PG_USER)
             - name: SPRING_DATASOURCE_PASSWORD

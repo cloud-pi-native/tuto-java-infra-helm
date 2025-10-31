@@ -1,5 +1,5 @@
 image:
-  repository: harbor.apps.dso.numerique-interieur.com/form-formation11/java-demo
+  repository: harbor.formation.cpin.numerique-interieur.com/form-formation11/java-demo
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "tuto"
@@ -8,45 +8,13 @@ ingress:
   host: test.formation-app.cpin.numerique-interieur.com
 
 # Contrainte de sécurité Openshift
-postgresql:
-  image:
-    repository: bitnamilegacy/postgresql
-  primary:
-    containerSecurityContext:
-      enabled: true
-      privileged: false
-      allowPrivilegeEscalation: false
-      seccompProfile:
-        type: RuntimeDefault
-      capabilities:
-        drop:
-          - ALL
-      runAsNonRoot: true
-    podSecurityContext:
-      enabled: true
-  volumePermissions:
-    enabled: false
-    securityContext:
-      runAsUser: "1001"
-  securityContext:
-    enabled: true
-  shmVolume:
-    chmod:
-      enabled: false
-  containerSecurityContext:
-    enabled: true
-  podSecurityContext:
-    enabled: true
-    volumePermissions:
-      enabled: true
-      securityContext:
-        runAsUser: "1001"
-    securityContext:
-      enabled: true
-    shmVolume:
-      chmod:
-        enabled: false
-    containerSecurityContext:
-      enabled: true
-    podSecurityContext:
-      enabled: true
+postgres:
+  auth:
+    existingSecret: pg-secret
+    secretKeys:
+      passwordKey: "PG_PASSWORD"
+      userPasswordKey: "PG_PASSWORD"
+      adminPasswordKey: "PG_ROOT_PASSWORD"
+    username: "userdemo"
+    database: "userdemo"
+
