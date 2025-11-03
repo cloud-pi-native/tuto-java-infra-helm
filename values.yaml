@@ -60,6 +60,7 @@ postgres:
     
   podSecurityContext:
     fsGroup: 99999
+    runAsUser: 99999
     runAsGroup: 99999
     runAsNonRoot: true
 
