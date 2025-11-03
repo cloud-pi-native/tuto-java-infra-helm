@@ -49,31 +49,17 @@ postgres:
       cpu: "100m"
 
   containerSecurityContext:
-    containerSecurityContext:
-      enabled: true
-    enabled: true
-    fsGroup: 99999
-    podSecurityContext:
-      enabled: true
-    securityContext:
-      enabled: true
-    shmVolume:
-      chmod:
-        enabled: false
-    volumePermissions:
-      enabled: true
-      securityContext:
-        runAsUser: '99999' 
-
-  podSecurityContext:
-    enabled: true
-    privileged: false
-    allowPrivilegeEscalation: false
-    seccompProfile:
-      type: RuntimeDefault
-    capabilities:
-      drop:
-        - ALL
     runAsNonRoot: true
     runAsUser: 99999
     runAsGroup: 99999
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL
+    
+  podSecurityContext:
+    fsGroup: 99999
+    runAsGroup: 99999
+    runAsNonRoot: true
+
