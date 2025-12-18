@@ -1,11 +1,11 @@
 image:
-  repository: harbor.formation.cpin.numerique-interieur.com/form-formation11/java-demo
+  repository: harbor.external.cpin.numerique-interieur.com/test-2/java-demo
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "tuto"
 
 ingress:
-  host: test.formation-app.cpin.numerique-interieur.com
+  host: test-18.formation-app.cpin.numerique-interieur.com
 
 # Contrainte de sécurité Openshift
 postgres:
